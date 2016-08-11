@@ -1,10 +1,17 @@
 var express = require('express');
 var app = express();
+var mongoose = require('mongoose');
+var config = require('./config');
 
 var port = process.env.PORT || 3000;
 
 app.use('/assets', express.static(__dirname + '/dist'));
-
 app.set('view engine', 'ejs');
+
+mongoose.connect(config.getDBConnectionStr(), function(err, db){
+	if(!err){
+		console.log('Connected to mongo!');
+	}
+});
 
 app.listen(port);
